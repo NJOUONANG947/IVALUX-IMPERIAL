@@ -1,10 +1,16 @@
 /** @type {import('next').NextConfig} */
-const backendUrl = process.env.BACKEND_URL || 'http://localhost:3001';
+
+// On définit l'adresse de ton backend Render
+const backendUrl = 'https://ivalux-imperial-1.onrender.com';
 
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['images.unsplash.com', 'cdn.shopify.com'],
+    // Autorise Shopify et Unsplash pour les images
+    remotePatterns: [
+      { protocol: 'https', hostname: 'cdn.shopify.com' },
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+    ],
   },
   async rewrites() {
     return [
@@ -32,6 +38,6 @@ const nextConfig = {
       { source: '/health', destination: `${backendUrl}/health` },
     ];
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
