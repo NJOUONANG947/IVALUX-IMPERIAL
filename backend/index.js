@@ -31,28 +31,22 @@ const gamificationRoutes = require('./routes/gamification');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 10000; // Aligné sur le port par défaut de Render
 
-// CORS configuration for production
-const allowedOrigins = process.env.FRONTEND_URL 
-  ? [process.env.FRONTEND_URL, 'http://localhost:3000']
-  : ['http://localhost:3000'];
-
+// CONFIGURATION CORS CORRIGÉE
 app.use(cors({ 
-  origin: function (origin, callback) {
-    // Allow requests with no origin (mobile apps, Postman, etc.)
-    if (!origin) return callback(null, true);
-    
-    if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true
+  origin: [
+    'https://ivalux.onrender.com', 
+    'http://localhost:3000'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
 app.use(express.json());
 
+// Routes
 app.use('/auth', authRoutes);
 app.use('/products', productsRoutes);
 app.use('/employee', employeeRoutes);
@@ -82,5 +76,5 @@ app.get('/health', (req, res) => {
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  console.log(`IVALUX IMPERIAL API running on http://localhost:${PORT}`);
+  console.log(`IVALUX IMPERIAL API running on port ${PORT}`);
 });
