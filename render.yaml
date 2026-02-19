@@ -1,0 +1,39 @@
+services:
+  # Backend API Service
+  - type: web
+    name: ivalux-imperial-backend
+    env: node
+    region: frankfurt  # Changez selon votre région préférée
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: SUPABASE_URL
+        sync: false  # Vous devrez ajouter cette valeur manuellement dans Render
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: FRONTEND_URL
+        sync: false  # Sera mis à jour après le déploiement du frontend
+
+  # Frontend Next.js Service
+  - type: web
+    name: ivalux-imperial-frontend
+    env: node
+    region: frankfurt  # Même région que le backend
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_API_URL
+        sync: false  # URL du backend Render (ex: https://ivalux-imperial-backend.onrender.com)
+      - key: BACKEND_URL
+        sync: false  # Même URL que NEXT_PUBLIC_API_URL

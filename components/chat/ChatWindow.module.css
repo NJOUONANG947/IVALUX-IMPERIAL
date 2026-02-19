@@ -1,0 +1,176 @@
+/* Chat Window CSS Module - Isolation for Chat Layout */
+.chatContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ChatGPT-like: messages start at top, scroll only here */
+.messagesArea {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.messageWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.messageWrapper.user {
+  align-items: flex-end;
+}
+
+.messageWrapper.assistant {
+  align-items: flex-start;
+}
+
+.messageBubble {
+  max-width: 80%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  word-wrap: break-word;
+  line-height: 1.5;
+}
+
+.messageWrapper.user .messageBubble {
+  background: linear-gradient(135deg, #C9A961 0%, #B8963D 100%);
+  color: #0A0A0A;
+  border-bottom-right-radius: 4px;
+}
+
+.messageWrapper.assistant .messageBubble {
+  background: #1A1A1A;
+  color: #FFFFF0;
+  border: 1px solid rgba(201, 169, 97, 0.2);
+  border-bottom-left-radius: 4px;
+}
+
+.typingIndicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 16px;
+  background: #1A1A1A;
+  border: 1px solid rgba(201, 169, 97, 0.2);
+  border-radius: 12px;
+  width: fit-content;
+}
+
+.typingDot {
+  width: 6px;
+  height: 6px;
+  background: #C9A961;
+  border-radius: 50%;
+  animation: typingBounce 1.4s infinite ease-in-out both;
+}
+
+.typingDot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.typingDot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes typingBounce {
+  0%, 80%, 100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+.inputArea {
+  flex-shrink: 0;
+  padding: 16px;
+  background: #0A0A0A;
+  border-top: 1px solid rgba(201, 169, 97, 0.2);
+}
+
+.inputWrapper {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.inputField {
+  flex: 1;
+  background: #1A1A1A;
+  border: 1px solid rgba(201, 169, 97, 0.3);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: #FFFFF0;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  resize: none;
+  min-height: 44px;
+  max-height: 120px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.inputField:focus {
+  border-color: #C9A961;
+}
+
+.inputField::placeholder {
+  color: rgba(255, 255, 240, 0.4);
+}
+
+.sendButton {
+  background: linear-gradient(135deg, #C9A961 0%, #B8963D 100%);
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  color: #0A0A0A;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sendButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(201, 169, 97, 0.3);
+}
+
+.sendButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.suggestedQuestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 16px 12px;
+}
+
+.suggestedQuestion {
+  background: rgba(201, 169, 97, 0.1);
+  border: 1px solid rgba(201, 169, 97, 0.3);
+  border-radius: 20px;
+  padding: 8px 16px;
+  color: #C9A961;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.suggestedQuestion:hover {
+  background: rgba(201, 169, 97, 0.2);
+  border-color: #C9A961;
+}
